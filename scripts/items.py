@@ -14,7 +14,7 @@ items = {
             "clip": 7,
             "speed": 75,
             "reloadSpeed": 1,
-            "spread": 0
+            "spread": 3
         },
         "ak47": {
             "fireRate": "auto",
@@ -25,7 +25,29 @@ items = {
             "clip": 30,
             "speed": 75,
             "reloadSpeed": 1.5,
-            "spread": 3
+            "spread": 5
+        },
+        "shotgun": {
+            "fireRate": "semi",
+            "type": "shotgunPellet",
+            "scale": 1,
+            "offset": 0.5,
+            "cooldown": 0.4,
+            "clip": 2,
+            "speed": 75,
+            "reloadSpeed": 0.8,
+            "spread": [5, 15]
+        },
+        "awp": {
+            "fireRate": "semi",
+            "type": "sniperBullet",
+            "scale": 1,
+            "offset": 0,
+            "cooldown": 1,
+            "clip": 6,
+            "speed": 200,
+            "reloadSpeed": 2,
+            "spread": 0
         }
     }
 }
@@ -138,22 +160,30 @@ class item(pygame.sprite.Sprite):
         self.sounds = importSounds("sounds/items/" + name, "guns")
         self.fireIndex = 0
 
+    def fireGun(self, spread):
+        # Projectile setup
+        newSpread = self.angle + uniform(-spread, spread)
+        spawn = self.itemPosition + pygame.math.Vector2(math.cos(math.radians(newSpread)), math.sin(math.radians(newSpread))) * (self.originalImage.get_width() / 2)
+        projectiles.add(projectile(self.data["type"], spawn, newSpread, self.data))
+
+        # Play sound
+        #self.sounds["fire" + str(self.fireIndex)].play()
+        self.fireIndex += 1
+
+        if self.fireIndex > 2:
+            self.fireIndex = 0
+
     def use(self):
         if self.type == "guns" and self.clip > 0 and not self.reloading:
-            # Projectile setup
-            spread = self.angle + uniform(-self.data["spread"], self.data["spread"])
-            spawn = self.itemPosition + pygame.math.Vector2(math.cos(math.radians(spread)), math.sin(math.radians(spread))) * (self.originalImage.get_width() / 2)
-            projectiles.add(projectile(self.data["type"], spawn, spread, self.data))
+            # Fire gun
+            if type(self.data["spread"]) != int:
+                for i in range(1, self.data["spread"][0]):
+                    self.fireGun(self.data["spread"][1])
+            else:
+                self.fireGun(self.data["spread"])
             
             # Remove ammo from clip
             self.clip -= 1
-
-            # Play sound
-            self.sounds["fire" + str(self.fireIndex)].play()
-            self.fireIndex += 1
-
-            if self.fireIndex > 2:
-                self.fireIndex = 0
 
     def update(self, deltaTime, offset):
         # Get the mouse

@@ -50,11 +50,13 @@ class player(pygame.sprite.Sprite):
 
         # Inventory setup
         self.inventory = {
-            "primary": item("nerfGun", self.position),
-            "secondary": item("ak47", self.position),
+            "primary": item("awp", self.position),
+            "secondary": item("shotgun", self.position),
             "ammo": {
-                "nerfDart": 14,
-                "bullet": 60
+                "nerfDart": 999,
+                "bullet": 999,
+                "shotgunPellet": 999,
+                "sniperBullet": 999
             }
         }
         self.currentItem = self.inventory["primary"]

@@ -34,6 +34,7 @@ layers = {
     "vfx": 3
 }
 
+# Sound mixer
 mixer = {
     "master": 1,
     "sfx": {
