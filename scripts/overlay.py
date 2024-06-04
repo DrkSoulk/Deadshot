@@ -20,7 +20,7 @@ class overlay(pygame.sprite.Sprite):
         
         # Draw ammo display
         if player.currentItem.type == "guns":
-            string = str(player.currentItem.clip) + " l " + str(player.inventory["ammo"][player.currentItem.data["type"]])
+            string = str(player.currentItem.clip) + " l " + str(player.inventory["ammo"][player.currentItem.data["name"]])
             textSize = self.basicFont.get_rect(string)
             
             self.basicFont.render_to(self.overlay, (size.x - textSize.width, size.y - textSize.height), string, (255, 255, 255))

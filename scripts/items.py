@@ -6,6 +6,7 @@ from random import uniform
 items = {
     "guns": {
         "nerfGun": {
+            "name": "nerfGun",
             "fireRate": "semi",
             "type": "nerfDart",
             "scale": 2,
@@ -14,40 +15,139 @@ items = {
             "clip": 7,
             "speed": 75,
             "reloadSpeed": 1,
-            "spread": 3
+            "spread": 4
         },
-        "ak47": {
+        "pistol": {
+            "name": "pistol",
+            "fireRate": "semi",
+            "type": "smallBullet",
+            "scale": 1.5,
+            "offset": 0.1,
+            "cooldown": 0.25,
+            "clip": 7,
+            "speed": 75,
+            "reloadSpeed": 0.6,
+            "spread": 5
+        },
+        "smg": {
+            "name": "smg",
             "fireRate": "auto",
             "type": "bullet",
-            "scale": 1,
+            "scale": 2,
+            "offset": 0,
+            "cooldown": 0.08,
+            "clip": 25,
+            "speed": 75,
+            "reloadSpeed": 1.2,
+            "spread": 8
+        },
+        "rifle": {
+            "name": "rifle",
+            "fireRate": "auto",
+            "type": "bullet",
+            "scale": 2,
             "offset": 0,
             "cooldown": 0.15,
             "clip": 30,
             "speed": 75,
             "reloadSpeed": 1.5,
-            "spread": 5
+            "spread": 7
         },
         "shotgun": {
+            "name": "shotgun",
             "fireRate": "semi",
-            "type": "shotgunPellet",
-            "scale": 1,
+            "type": "pellet",
+            "scale": 2,
             "offset": 0.5,
-            "cooldown": 0.4,
+            "cooldown": 0.7,
             "clip": 2,
-            "speed": 75,
+            "speed": 60,
             "reloadSpeed": 0.8,
-            "spread": [5, 15]
+            "spread": [10, 10]
         },
-        "awp": {
+        "sniper": {
+            "name": "sniper",
             "fireRate": "semi",
-            "type": "sniperBullet",
-            "scale": 1,
+            "type": "heavyBullet",
+            "scale": 2,
             "offset": 0,
             "cooldown": 1,
-            "clip": 6,
+            "clip": 3,
             "speed": 200,
             "reloadSpeed": 2,
             "spread": 0
+        },
+        "revolver": {
+            "name": "revolver",
+            "fireRate": "semi",
+            "type": "heavyBullet",
+            "scale": 2,
+            "offset": 0,
+            "cooldown": 0.8,
+            "clip": 6,
+            "speed": 100,
+            "reloadSpeed": 1.5,
+            "spread": 0
+        },
+        "tommyGun": {
+            "name": "tommyGun",
+            "fireRate": "auto",
+            "type": "bullet",
+            "scale": 2,
+            "offset": 0,
+            "cooldown": 0.12,
+            "clip": 50,
+            "speed": 75,
+            "reloadSpeed": 1.5,
+            "spread": 10
+        },
+        "pea": {
+            "name": "pea",
+            "fireRate": "semi",
+            "type": "pea",
+            "scale": 2,
+            "offset": 0,
+            "cooldown": 0.4,
+            "clip": 5,
+            "speed": 75,
+            "reloadSpeed": 0.8,
+            "spread": 5
+        },
+        "tshirt": {
+            "name": "tshirt",
+            "fireRate": "semi",
+            "type": "tshirt",
+            "scale": 2,
+            "offset": 0,
+            "cooldown": 0,
+            "clip": 1,
+            "speed": 120,
+            "reloadSpeed": 1.2,
+            "spread": 2
+        },
+        "guitar": {
+            "name": "guitar",
+            "fireRate": "semi",
+            "type": ["musicNote1", "musicNote2", "musicNote3"],
+            "scale": 2,
+            "offset": 0,
+            "cooldown": 0,
+            "clip": 16,
+            "speed": 60,
+            "reloadSpeed": 0.6,
+            "spread": 7
+        },
+        "letter": {
+            "name": "letter",
+            "fireRate": "auto",
+            "type": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"],
+            "scale": 1.5,
+            "offset": 0,
+            "cooldown": 0.2,
+            "clip": 20,
+            "speed": 55,
+            "reloadSpeed": 0.7,
+            "spread": 5
         }
     }
 }
@@ -78,7 +178,7 @@ class projectile(pygame.sprite.Sprite):
 
         # Projectile setup
         self.zIndex = layers["projectiles"]
-        self.originalImage = scaleImage(pygame.image.load("sprites/projectiles/" + type + ".png"), data["scale"]).convert_alpha()
+        self.originalImage = scaleImage(pygame.image.load("sprites/projectiles/" + type + ".png"), 1.5).convert_alpha()
         self.rect = self.originalImage.get_rect(center = position)
         self.position = position
 
@@ -128,7 +228,6 @@ class item(pygame.sprite.Sprite):
         self.type = ""
         self.playerPosition = position
         self.itemPosition = pygame.math.Vector2()
-        self.originalImage = pygame.image.load("sprites/items/" + name + ".png").convert_alpha()
         self.angle = 0
         self.flipped = False
         self.data = None
@@ -141,12 +240,11 @@ class item(pygame.sprite.Sprite):
                     self.type = i
                     self.data = b
 
-        # Scale image
-        self.originalImage = scaleImage(self.originalImage, 2)
-
         # Image setup
+        self.originalImage = scaleImage(pygame.image.load("sprites/items/" + name + ".png").convert_alpha(), self.data["scale"])
         self.image = self.originalImage
         self.rect = self.image.get_rect(center = position)
+        self.projectileIndex = 0
 
         # Cooldown setup
         self.cooldown = timer(self.data["cooldown"])
@@ -157,17 +255,33 @@ class item(pygame.sprite.Sprite):
         self.reloadTime = self.data["reloadSpeed"]
 
         # Sound setup
-        self.sounds = importSounds("sounds/items/" + name, "guns")
+        self.soundChannel = pygame.mixer.Channel(1)
+        self.sounds = importSounds("sounds/items/" + name)
         self.fireIndex = 0
+
+        # Set volume
+        self.soundChannel.set_volume(mixer["guns"])
 
     def fireGun(self, spread):
         # Projectile setup
         newSpread = self.angle + uniform(-spread, spread)
         spawn = self.itemPosition + pygame.math.Vector2(math.cos(math.radians(newSpread)), math.sin(math.radians(newSpread))) * (self.originalImage.get_width() / 2)
-        projectiles.add(projectile(self.data["type"], spawn, newSpread, self.data))
+        
+        # Get the projectile image
+        image = self.data["type"]
+
+        if type(image) == str:
+            projectiles.add(projectile(self.data["type"], spawn, newSpread, self.data))
+        else:
+            projectiles.add(projectile(self.data["type"][self.projectileIndex], spawn, newSpread, self.data))
+
+            self.projectileIndex += 1
+
+            if self.projectileIndex > len(self.data["type"]) - 1:
+                self.projectileIndex = 0
 
         # Play sound
-        #self.sounds["fire" + str(self.fireIndex)].play()
+        self.soundChannel.play(self.sounds["fire" + str(self.fireIndex)])
         self.fireIndex += 1
 
         if self.fireIndex > 2:

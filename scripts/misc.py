@@ -35,26 +35,13 @@ def importSpriteSheets(path):
     
     return spriteSheets
 
-def importSounds(path, group):
+def importSounds(path):
     sounds = {}
 
     # Loop through sounds
     for _, _, i in walk(path):
         for v in i:
-            volume = mixer["master"]
-
-            # Loop through volume levels and calculate
-            for a in mixer.values():
-                if type(a) is dict and group in a:
-                    volume *= a["master"] * a[group]
-
-                    break
-
-            # Load and adjust volume of sound
-            sound = pygame.mixer.Sound(path + "/" + v)
-            sound.set_volume(volume)
-            
-            sounds[v[:-4]] = sound
+            sounds[v[:-4]] = pygame.mixer.Sound(path + "/" + v)
     
     return sounds
 

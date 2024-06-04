@@ -37,9 +37,6 @@ layers = {
 # Sound mixer
 mixer = {
     "master": 1,
-    "sfx": {
-        "master": 0.8,
-        "player": 0.2,
-        "guns": 0.4
-    }
+    "player": 0.6,
+    "guns": 0.4
 }

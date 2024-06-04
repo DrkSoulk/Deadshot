@@ -1,39 +1,49 @@
 # Changelog
 
-### Version 0.2.5 (Colby)
+### Version 0.2.6
+
+```
+[+] Added upto 12 guns
+[+] Added sounds for all the new guns
+[+] Added sound channels
+[*] Fixed the reloading bug
+[*] Changed and restructured weapon stats
+```
+
+### Version 0.2.5
 
 ```
 [+] Added an AWP (Sniper) and a shotgun
 [*] Moved, changed, configured GitHub and Replit pages
 ```
 
-### Version 0.2.4 (Colby)
+### Version 0.2.4
 
 ```
 [*] Finished moving and editing the MD files
 ```
 
-### Version 0.2.3.5 (Colby)
+### Version 0.2.3.5
 
 ```
 [*] Fixed md not displaying
 ```
 
-### Version 0.2.3 (Colby)
+### Version 0.2.3
 
 ```
 [+] Added a proposal
 [*] Formatted the changelog properly
 ```
 
-### Version 0.2.2 (Colby)
+### Version 0.2.2
 
 ```
 [+] Added projectile collision
 [+] Added bullet hole vfx
 ```
 
-### Version 0.2.1 (Colby)
+### Version 0.2.1
 
 ```
 [+] Added an overlay
@@ -42,7 +52,7 @@
 [*] Fixed reloading
 ```
 
-### Version 0.2.0 (Colby)
+### Version 0.2.0
 
 ```
 [+] Added footstep and gun sounds
@@ -50,7 +60,7 @@
 [-] Removed firing while reloading
 ```
 
-### Version 0.1.9 (Colby)
+### Version 0.1.9
 
 ```
 [+] Added gun spread
@@ -58,7 +68,7 @@
 [+] Added gun reloading
 ```
 
-### Version 0.1.8 (Colby)
+### Version 0.1.8
 
 ```
 [+] Added player collisons
@@ -66,7 +76,7 @@
 [*] Fixed player and guns not facing corretly
 ```
 
-### Version 0.1.7 (Colby)
+### Version 0.1.7
 
 ```
 [+] Added item swapping
@@ -75,14 +85,14 @@
 [*] Changed where the projectiles spawn (tip of the barrel)
 ```
 
-### Version 0.1.6 (Colby)
+### Version 0.1.6
 
 ```
 [*] Fixed offset :)
 [-] Removed version number from window title
 ```
 
-### Version 0.1.5 (Colby)
+### Version 0.1.5
 
 ```
 [+] Increased player animation speed
@@ -92,7 +102,7 @@
 [*] Made the player face in the direction the mouse is in relative to the player instead of the middle of the screen
 ```
 
-### Version 0.1.4 (Colby)
+### Version 0.1.4
 
 ```
 [+] Added items
@@ -100,7 +110,7 @@
 [+] Added item rotation
 ```
 
-### Version 0.1.3 (Colby)
+### Version 0.1.3
 
 ```
 [+] Added the version number to the window
@@ -108,7 +118,7 @@
 [*] Made the player always face the mouse
 ```
 
-### Version 0.1.2 (Colby)
+### Version 0.1.2
 
 ```
 [+] Added a player sprite with animations
@@ -116,7 +126,7 @@
 [+] Player sprite follows the cursor
 ```
 
-### Version 0.1.1 (Colby)
+### Version 0.1.1
 
 ```
 [+] Added a camera with smooth movement
@@ -124,7 +134,7 @@
 [*] Re-structured files
 ```
 
-### Version 0.1.0 (Colby)
+### Version 0.1.0
 
 ```
 [+] Initialized the project

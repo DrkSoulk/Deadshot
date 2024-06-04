@@ -50,13 +50,21 @@ class player(pygame.sprite.Sprite):
 
         # Inventory setup
         self.inventory = {
-            "primary": item("awp", self.position),
-            "secondary": item("shotgun", self.position),
+            "primary": item("tommyGun", self.position),
+            "secondary": item("pea", self.position),
             "ammo": {
-                "nerfDart": 999,
-                "bullet": 999,
-                "shotgunPellet": 999,
-                "sniperBullet": 999
+                "nerfGun": 999,
+                "pistol": 999,
+                "smg": 999,
+                "rifle": 999,
+                "shotgun": 999,
+                "sniper": 999,
+                "guitar": 999,
+                "letter": 999,
+                "pea": 999,
+                "revolver": 999,
+                "tommyGun": 999,
+                "tshirt": 999
             }
         }
         self.currentItem = self.inventory["primary"]
@@ -66,13 +74,17 @@ class player(pygame.sprite.Sprite):
         self.cooldown = timer(0.4)
 
         # Sound setup
+        self.soundChannel = pygame.mixer.Channel(0)
         self.sounds = {
             "footsteps": {
-                "ground": importSounds("sounds/player/footsteps/ground", "player"),
-                "carpet": importSounds("sounds/player/footsteps/carpet", "player")
+                "ground": importSounds("sounds/player/footsteps/ground"),
+                "carpet": importSounds("sounds/player/footsteps/carpet")
             },
-            "items": importSounds("sounds/player/items", "player")
+            "items": importSounds("sounds/player/items")
         }
+
+        # Set volume
+        self.soundChannel.set_volume(mixer["player"])
 
         # Footstep setup
         self.footstepTimer = timer(0.4)
@@ -164,15 +176,15 @@ class player(pygame.sprite.Sprite):
                 self.currentItem = self.inventory["primary"]
                 self.currentItemIndex = "primary"
                 self.cooldown.start()
-                self.sounds["items"]["swap"].play()
+                self.soundChannel.play(self.sounds["items"]["swap"])
             elif keys[keybinds["secondary"]]:
                 self.currentItem = self.inventory["secondary"]
                 self.currentItemIndex = "secondary"
                 self.cooldown.start()
-                self.sounds["items"]["swap"].play()
+                self.soundChannel.play(self.sounds["items"]["swap"])
             elif keys[keybinds["swap"]]:
                 self.cooldown.start()
-                self.sounds["items"]["swap"].play()
+                self.soundChannel.play(self.sounds["items"]["swap"])
 
                 if self.currentItemIndex == "primary":
                     self.currentItem = self.inventory["secondary"]
@@ -182,9 +194,9 @@ class player(pygame.sprite.Sprite):
                     self.currentItemIndex = "primary"
             elif keys[keybinds["reload"]]:
                 if self.currentItem != None and self.currentItem.type == "guns" and not self.currentItem.reloading:
-                    if self.inventory["ammo"][self.currentItem.data["type"]] > 0:
+                    if self.inventory["ammo"][self.currentItem.data["name"]] > 0:
                         self.currentItem.reloading = True
-                        self.currentItem.sounds["reload"].play()
+                        self.soundChannel.play(self.currentItem.sounds["reload"])
             
         # Button cooldown
         self.cooldown.update(deltaTime)
@@ -197,7 +209,7 @@ class player(pygame.sprite.Sprite):
                 self.currentItem.reloading = False
                 self.currentItem.reloadTime = self.currentItem.data["reloadSpeed"]
                 
-                ammo = self.inventory["ammo"][self.currentItem.data["type"]]
+                ammo = self.inventory["ammo"][self.currentItem.data["name"]]
                 maxClip = self.currentItem.data["clip"]
                 clip = self.currentItem.clip
 
@@ -208,7 +220,7 @@ class player(pygame.sprite.Sprite):
                     clip += ammo
                     ammo = 0
                 
-                self.inventory["ammo"][self.currentItem.data["type"]] = ammo
+                self.inventory["ammo"][self.currentItem.data["name"]] = ammo
                 self.currentItem.clip = clip
 
     def collision(self, direction):
@@ -253,7 +265,7 @@ class player(pygame.sprite.Sprite):
 
         # Play footstep
         if self.direction != pygame.math.Vector2(0) and not self.footstepTimer.active:
-            self.sounds["footsteps"][self.footstepSound][str(self.footstepIndex)].play()
+            self.soundChannel.play(self.sounds["footsteps"][self.footstepSound][str(self.footstepIndex)])
             self.footstepTimer.start()
 
             self.footstepIndex += 1
