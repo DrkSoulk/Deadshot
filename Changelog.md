@@ -1,5 +1,12 @@
 # Changelog
 
+### Version 0.2.7
+
+```
+[+] Added health display
+[+] Added player health
+```
+
 ### Version 0.2.6
 
 ```
