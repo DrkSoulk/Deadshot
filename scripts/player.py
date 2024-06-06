@@ -42,6 +42,7 @@ class player(pygame.sprite.Sprite):
 
         # Player stats
         self.speed = 200
+        self.health = 100
 
         # Movement
         self.direction = pygame.math.Vector2()

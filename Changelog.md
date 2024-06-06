@@ -1,5 +1,11 @@
 # Changelog
 
+### Version 0.2.8
+
+```
+[+] Actually added player health
+```
+
 ### Version 0.2.7
 
 ```
