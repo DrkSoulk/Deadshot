@@ -1,4 +1,11 @@
 # Changelog
+### Version 0.3.1
+```
+[+] Added changing colours based on health to healthbar (Green-Red)
+[+] Made bullet icon
+[+] Added visual ammocounter using bullet icon
+```
+
 ### Version 0.3.0
 ```
 [+] Added Healthbar to UI
