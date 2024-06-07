@@ -1,5 +1,8 @@
 # Changelog
-
+### Version 0.2.9
+```
+[+] Reformatted all modules except items and level to be pep8 compliant
+```
 ### Version 0.2.8
 
 ```

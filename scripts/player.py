@@ -1,3 +1,8 @@
+'''
+This module contains the player class.
+This class is for the player controlled character.
+'''
+
 import pygame
 from settings import *
 from misc import *
@@ -93,6 +98,9 @@ class player(pygame.sprite.Sprite):
         self.footstepIndex = 0
     
     def animate(self, deltaTime):
+        '''
+        Cycles frames of animation
+        '''
         # Change frame
         self.frame += 7 * deltaTime
 
@@ -101,7 +109,9 @@ class player(pygame.sprite.Sprite):
             self.frame = 0
 
         # Change image
-        self.image = pygame.Surface.subsurface(self.animations[self.status][1], pygame.Rect((tileSize * int(self.frame), 0), (tileSize, tileSize)))
+        self.image = pygame.Surface.subsurface(
+            self.animations[self.status][1], pygame.Rect(
+                (tileSize * int(self.frame), 0), (tileSize, tileSize)))
         self.image = scaleImage(self.image, 2)
         self.rect = self.image.get_rect(center = self.position)
 
@@ -110,6 +120,9 @@ class player(pygame.sprite.Sprite):
             self.image = pygame.transform.flip(self.image, 1, 0)
     
     def input(self, deltaTime):
+        '''
+        Gets and handles player input (Keyboard and mouse)
+        '''
         # Getting every key pressed
         keys = pygame.key.get_pressed()
 
@@ -194,7 +207,8 @@ class player(pygame.sprite.Sprite):
                     self.currentItem = self.inventory["primary"]
                     self.currentItemIndex = "primary"
             elif keys[keybinds["reload"]]:
-                if self.currentItem != None and self.currentItem.type == "guns" and not self.currentItem.reloading:
+                if self.currentItem != None and self.currentItem.type ==\
+                      "guns" and not self.currentItem.reloading:
                     if self.inventory["ammo"][self.currentItem.data["name"]] > 0:
                         self.currentItem.reloading = True
                         self.soundChannel.play(self.currentItem.sounds["reload"])
@@ -203,12 +217,14 @@ class player(pygame.sprite.Sprite):
         self.cooldown.update(deltaTime)
         
         # Reloading
-        if self.currentItem != None and self.currentItem.type == "guns" and self.currentItem.reloading:
+        if self.currentItem != None and self.currentItem.type == "guns" and \
+            self.currentItem.reloading:
             self.currentItem.reloadTime -= deltaTime
             
             if self.currentItem.reloadTime <= 0:
                 self.currentItem.reloading = False
-                self.currentItem.reloadTime = self.currentItem.data["reloadSpeed"]
+                self.currentItem.reloadTime = self.currentItem.data[
+                    "reloadSpeed"]
                 
                 ammo = self.inventory["ammo"][self.currentItem.data["name"]]
                 maxClip = self.currentItem.data["clip"]
@@ -225,6 +241,9 @@ class player(pygame.sprite.Sprite):
                 self.currentItem.clip = clip
 
     def collision(self, direction):
+        '''
+        Function checks for and handles collision 
+        '''
         # Check if colliding
         for i in self.collisions:
             if hasattr(i, "hitbox") and i.hitbox.colliderect(self.hitbox):
@@ -248,6 +267,9 @@ class player(pygame.sprite.Sprite):
                     self.position.y = self.hitbox.centery
 
     def move(self, deltaTime):
+        '''
+        Function moves player controlled character
+        '''
         # Normalize vector
         if self.direction.magnitude() > 0:
             self.direction = self.direction.normalize()
@@ -278,9 +300,15 @@ class player(pygame.sprite.Sprite):
         self.footstepTimer.update(deltaTime)
     
     def updateOffset(self, offset):
+        '''
+        Refreshes self.offset
+        '''
         self.offset = offset
     
     def update(self, deltaTime):
+        '''
+        Updates certain key variables
+        '''
         # Update player
         self.input(deltaTime)
         self.move(deltaTime)

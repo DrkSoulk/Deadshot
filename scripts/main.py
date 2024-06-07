@@ -1,8 +1,16 @@
+'''
+This module contains the game class.
+This class contains central functions and the main game loop.
+'''
+
 import pygame, sys  
 from settings import *
 from level import *
 
 class game:
+    '''
+    Class for main loop and certain central variables/functions
+    '''
     def __init__(self):
         # Initialize pygame
         pygame.init()
@@ -15,6 +23,9 @@ class game:
         self.level = level()
     
     def run(self):
+        '''
+        Main loop
+        '''
         while True:
             for i in pygame.event.get():
                 # Quit pygame
