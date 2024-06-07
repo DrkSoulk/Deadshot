@@ -1,3 +1,7 @@
+'''
+This module contains a bunch of constants and config information
+'''
+
 import pygame
 
 # Game resolution

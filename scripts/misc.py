@@ -1,3 +1,7 @@
+'''
+This module contains the timer class and several miscellaneous functions
+'''
+
 import pygame
 from settings import *
 from os import walk

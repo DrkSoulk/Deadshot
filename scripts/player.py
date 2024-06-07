@@ -212,7 +212,13 @@ class player(pygame.sprite.Sprite):
                     if self.inventory["ammo"][self.currentItem.data["name"]] > 0:
                         self.currentItem.reloading = True
                         self.soundChannel.play(self.currentItem.sounds["reload"])
-            
+        
+        #TESTING FOR HEALTHBAR(REMOVE)
+        if keys[pygame.K_COMMA]:
+            self.health -=1
+        if keys[pygame.K_PERIOD]:
+            self.health +=1
+
         # Button cooldown
         self.cooldown.update(deltaTime)
         

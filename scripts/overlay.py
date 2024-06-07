@@ -18,6 +18,21 @@ class overlay(pygame.sprite.Sprite):
         textSize = self.basicFont.get_rect(text)
         self.basicFont.render_to(self.overlay, (size.x - textSize.width, size.y - (textSize.height * position)), text, (255, 255, 255))
 
+    def drawHealth(self, health, position = 3):
+        # Get overlay size
+        size = pygame.math.Vector2(self.overlay.get_size())
+        
+        # Avoids <0 error
+        if health < 0:
+            health = 0
+        healthbar = pygame.surface.Surface((health*2, 20))
+
+        # Colour and draw healthbar
+        healthbar.fill((255,0,0))
+        healthbarSize = healthbar.get_rect()
+        self.overlay.blit(healthbar,(size.x - healthbarSize.width, size.y - \
+                                     (healthbarSize.height * position)))
+
     def update(self, player):
         # Clear overlay
         self.overlay.fill((0, 0, 0, 0))
@@ -30,7 +45,8 @@ class overlay(pygame.sprite.Sprite):
             self.drawText(str(player.currentItem.clip) + " l " + str(player.inventory["ammo"][player.currentItem.data["name"]]))
         
         # Draw health display
-        self.drawText(str(player.health), 3)
+        self.drawHealth(player.health)
+        print(player.health)
         
         # Return to be drawn
         return self.overlay, self.rect
