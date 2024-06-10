@@ -1,4 +1,11 @@
 # Changelog
+### EnemyAI Version 0.0.1
+```
+[+] Made placeholder zombie sprite
+[+] Created enemy class
+[+] Added enemy class to drawSprites() function
+```
+
 ### Version 0.3.1
 ```
 [+] Added changing colours based on health to healthbar (Green-Red)

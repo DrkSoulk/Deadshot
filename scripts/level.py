@@ -4,6 +4,7 @@ from misc import *
 from player import player
 from overlay import overlay
 from pytmx.util_pygame import load_pygame
+from enemy import enemy
 
 class level:
     def __init__(self):
@@ -28,6 +29,9 @@ class level:
         # Drawing the player
         self.player = player(middleScreen, self.sprites, self.collisions)
         
+        # Drawing Enemies
+        self.enemies = [enemy([self.player,], (2,2), self.sprites )]
+        
         # Drawing the overlay
         self.overlay = overlay()
 
@@ -48,7 +52,7 @@ class level:
                 self.sprites.add(i)
 
         # Updating sprites
-        self.sprites.drawSprites(self.player)
+        self.sprites.drawSprites(self.player, self.enemies)
         self.sprites.update(deltaTime)
         
         # Updating overlay
@@ -76,7 +80,7 @@ class camera(pygame.sprite.Group):
         self.offset = pygame.math.Vector2()
         self.goal = pygame.math.Vector2()
 
-    def drawSprites(self, player):
+    def drawSprites(self, player, enemies):
         # Offset camera based on mouse position
         mouseOffset = middleScreen - pygame.mouse.get_pos()
 
@@ -110,5 +114,8 @@ class camera(pygame.sprite.Group):
                         else:
                             self.screen.blit(player.currentItem.image, player.currentItem.rect)
                             self.screen.blit(v.image, newrect)
+                    
+                    if v in enemies:
+                        self.screen.blit(v.image, newrect)
                     else:
                         self.screen.blit(v.image, newrect)
