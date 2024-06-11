@@ -56,8 +56,8 @@ class player(pygame.sprite.Sprite):
 
         # Inventory setup
         self.inventory = {
-            "primary": item("tommyGun", self.position),
-            "secondary": item("pea", self.position),
+            "primary": item("rifle", self.position),
+            "secondary": item("letter", self.position),
             "ammo": {
                 "nerfGun": 999,
                 "pistol": 999,

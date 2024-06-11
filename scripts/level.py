@@ -30,7 +30,7 @@ class level:
         self.player = player(middleScreen, self.sprites, self.collisions)
         
         # Drawing Enemies
-        self.enemies = [enemy([self.player,], (2,2), self.sprites )]
+        self.enemies = [enemy([self.player,], (3,3), self.sprites, self.collisions)]
         
         # Drawing the overlay
         self.overlay = overlay()
@@ -93,8 +93,8 @@ class camera(pygame.sprite.Group):
         self.goal = player.rect.center - middleScreen - mouseOffset
 
         # Smoothen the camera
-        self.offset.x = ((self.offset.x * 0.975) + (self.goal.x * 0.025))
-        self.offset.y = ((self.offset.y * 0.975) + (self.goal.y * 0.025))
+        #self.offset.x = ((self.offset.x * 0.975) + (self.goal.x * 0.025))
+        #self.offset.y = ((self.offset.y * 0.975) + (self.goal.y * 0.025))
 
         # Draw sprites
         for i in layers.values():

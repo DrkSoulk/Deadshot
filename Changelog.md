@@ -1,5 +1,12 @@
 # Changelog
+### EnemyAI Version 0.0.2
+
+```
+[+] Enemy now moves towards player position
+```
+
 ### EnemyAI Version 0.0.1
+
 ```
 [+] Made placeholder zombie sprite
 [+] Created enemy class
@@ -7,6 +14,7 @@
 ```
 
 ### Version 0.3.1
+
 ```
 [+] Added changing colours based on health to healthbar (Green-Red)
 [+] Made bullet icon
@@ -14,11 +22,13 @@
 ```
 
 ### Version 0.3.0
+
 ```
 [+] Added Healthbar to UI
 ```
 
 ### Version 0.2.9
+
 ```
 [+] Reformatted all modules except items and level to be pep8 compliant
 ```
