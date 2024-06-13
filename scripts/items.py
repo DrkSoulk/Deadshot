@@ -178,7 +178,7 @@ class projectile(pygame.sprite.Sprite):
 
         # Projectile setup
         self.zIndex = layers["projectiles"]
-        self.originalImage = scaleImage(pygame.image.load("sprites/projectiles/" + type + ".png"), 1.5).convert_alpha()
+        self.originalImage = pygame.image.load("sprites/projectiles/" + type + ".png").convert_alpha()
         self.rect = self.originalImage.get_rect(center = position)
         self.position = position
 

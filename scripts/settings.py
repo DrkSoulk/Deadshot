@@ -13,7 +13,8 @@ overlayOffset = pygame.math.Vector2(30)
 fontSize = 24
 
 # Map settings
-tileSize = 32
+tileSize = 18
+scaleFactor = 2.5
 maxLookDistance = pygame.math.Vector2(150)
 
 # Player keybinds
@@ -35,7 +36,8 @@ layers = {
     "floor": 0,
     "projectiles": 1,
     "main": 2,
-    "vfx": 3
+    "objects": 3,
+    "vfx": 4
 }
 
 # Sound mixer

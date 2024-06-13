@@ -1,4 +1,12 @@
 # Changelog
+
+### Version 0.3.1
+```
+[+] Added a new sewer map
+[*] Changed the way sprites are drawn
+[*] Changed tileSize aswell as scaleFactor size
+```
+
 ### Version 0.3.1
 ```
 [+] Added changing colours based on health to healthbar (Green-Red)

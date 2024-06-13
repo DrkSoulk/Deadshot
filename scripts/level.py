@@ -15,18 +15,22 @@ class level:
         self.collisions = pygame.sprite.Group()
 
         # Load map
-        mapData = load_pygame("map/test.tmx")
+        mapData = load_pygame("map/sewer.tmx")
 
         # Floor
         for x, y, image in mapData.get_layer_by_name("Floor").tiles():
-            sprites((x * tileSize, y * tileSize), image, self.sprites, layers["floor"])
+            sprites((x * tileSize * scaleFactor, y * tileSize * scaleFactor), scaleImage(image, scaleFactor), self.sprites, layers["floor"])
 
         # Walls
         for x, y, image in mapData.get_layer_by_name("Walls").tiles():
-            sprites((x * tileSize, y * tileSize), image, [self.sprites, self.collisions])
+            sprites((x * tileSize * scaleFactor, y * tileSize * scaleFactor), scaleImage(image, scaleFactor), [self.sprites, self.collisions])
+        
+        # Objects
+        for i in mapData.get_layer_by_name("Objects"):
+            sprites((i.x * scaleFactor, i.y * scaleFactor), scaleImage(i.image, scaleFactor), self.sprites, layers["objects"])
 
         # Drawing the player
-        self.player = player(middleScreen, self.sprites, self.collisions)
+        self.player = player((125, 125), self.sprites, self.collisions)
         
         # Drawing the overlay
         self.overlay = overlay()

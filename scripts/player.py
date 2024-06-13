@@ -111,8 +111,8 @@ class player(pygame.sprite.Sprite):
         # Change image
         self.image = pygame.Surface.subsurface(
             self.animations[self.status][1], pygame.Rect(
-                (tileSize * int(self.frame), 0), (tileSize, tileSize)))
-        self.image = scaleImage(self.image, 2)
+                (32 * int(self.frame), 0), (32, 32)))
+        self.image = scaleImage(self.image, scaleFactor)
         self.rect = self.image.get_rect(center = self.position)
 
         # Flip if needed
