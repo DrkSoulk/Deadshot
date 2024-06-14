@@ -1,6 +1,12 @@
 # Changelog
 
-### Version 0.3.1
+### Version 0.3.3
+```
+[+] Added a new rock map
+[+] Added a way to choose the map
+```
+
+### Version 0.3.2
 ```
 [+] Added a new sewer map
 [*] Changed the way sprites are drawn
