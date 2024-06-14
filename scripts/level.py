@@ -12,28 +12,47 @@ class level:
 
         # Sprite groups
         self.sprites = camera()
+        self.map = pygame.sprite.Group()
         self.collisions = pygame.sprite.Group()
-
-        # Load map
-        mapData = load_pygame("map/sewer.tmx")
-
-        # Floor
-        for x, y, image in mapData.get_layer_by_name("Floor").tiles():
-            sprites((x * tileSize * scaleFactor, y * tileSize * scaleFactor), scaleImage(image, scaleFactor), self.sprites, layers["floor"])
-
-        # Walls
-        for x, y, image in mapData.get_layer_by_name("Walls").tiles():
-            sprites((x * tileSize * scaleFactor, y * tileSize * scaleFactor), scaleImage(image, scaleFactor), [self.sprites, self.collisions])
-        
-        # Objects
-        for i in mapData.get_layer_by_name("Objects"):
-            sprites((i.x * scaleFactor, i.y * scaleFactor), scaleImage(i.image, scaleFactor), self.sprites, layers["objects"])
 
         # Drawing the player
         self.player = player((125, 125), self.sprites, self.collisions)
+
+        # Load map
+        self.load(input("Choose a map (test, rock, sewer): "))
         
         # Drawing the overlay
         self.overlay = overlay()
+
+    def load(self, map):
+        # Remove map
+        for i in self.sprites:
+            for v in self.map:
+                if i == v:
+                    self.sprites.remove(i)
+        
+        # Reset map
+        self.collisions.empty()
+        self.map.empty()
+
+        # Load map
+        mapData = load_pygame("map/" + map + ".tmx")
+
+        # Floor
+        for x, y, image in mapData.get_layer_by_name("Floor").tiles():
+            sprites((x * tileSize * scaleFactor, y * tileSize * scaleFactor), scaleImage(image, scaleFactor), self.map, layers["floor"])
+
+        # Walls
+        for x, y, image in mapData.get_layer_by_name("Walls").tiles():
+            sprites((x * tileSize * scaleFactor, y * tileSize * scaleFactor), scaleImage(image, scaleFactor), [self.map, self.collisions])
+        
+        # Objects
+        for i in mapData.get_layer_by_name("Objects"):
+            sprites((i.x * scaleFactor, i.y * scaleFactor), scaleImage(i.image, scaleFactor), self.map, layers["objects"])
+        
+        # Add map to be drawn
+        for i in self.map:
+            self.sprites.add(i)
 
     def run(self, deltaTime):
         # Updating background
