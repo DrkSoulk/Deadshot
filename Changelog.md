@@ -1,5 +1,10 @@
 # Changelog
 
+### Version 0.3.4
+```
+[+] Brought enemy from temp-enemyAI branch
+```
+
 ### Version 0.3.3
 ```
 [+] Added a new rock map
