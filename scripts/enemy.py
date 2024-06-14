@@ -14,7 +14,7 @@ class enemy(pygame.sprite.Sprite):
         self.position = pygame.math.Vector2(self.rect.center)
         self.speed = 0.5
         self.collisions = collisions
-
+        self.hitbox = self.rect.copy()
     def move(self):
         self.target = self.players[0]
 
@@ -31,9 +31,21 @@ class enemy(pygame.sprite.Sprite):
         weightdenom = abs(yplayerweight) + abs(xplayerweight)
         weight.x = xplayerweight/weightdenom
         weight.y = yplayerweight/weightdenom
-
         self.position.x += self.speed*(weight.x)
+        for i in self.collisions:
+            self.hitbox.centerx = self.position.x
+            if hasattr(i, "hitbox") and i.hitbox.colliderect(self.hitbox):
+                self.position.x -= self.speed*(weight.x)
+                print('horizontal collision')
+
         self.position.y += self.speed*(weight.y)
+        for i in self.collisions:
+            self.hitbox.centery = self.position.y
+            if hasattr(i, "hitbox") and i.hitbox.colliderect(self.hitbox):
+                self.position.y -= self.speed*(weight.y)
+        
+
+
     def update(self, deltatime):
         self.move()
         self.rect.center = self.position

@@ -1,4 +1,10 @@
 # Changelog
+### EnemyAI Version 0.0.3
+
+```
+[+] Added collision to enemy movement
+```
+
 ### EnemyAI Version 0.0.2
 
 ```
