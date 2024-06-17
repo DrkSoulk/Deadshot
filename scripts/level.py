@@ -15,11 +15,19 @@ class level:
         self.map = pygame.sprite.Group()
         self.collisions = pygame.sprite.Group()
 
-        # Drawing the player
-        self.player = player((125, 125), self.sprites, self.collisions)
-
         # Load map
-        self.load(input("Choose a map (test, rock, sewer): "))
+        selection =(input("Choose a map (test, rock, sewer): "))
+        self.load(selection)
+
+        # Drawing the player
+        if selection == "sewer":
+            self.player = player((125, 125), self.sprites, self.collisions)
+        elif selection == "rock":
+            self.player = player((350, 350), self.sprites, self.collisions)
+        elif selection == "test":
+            self.player = player((600, 600), self.sprites, self.collisions)
+
+        
         
         # Drawing the overlay
         self.overlay = overlay()

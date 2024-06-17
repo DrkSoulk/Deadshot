@@ -1,5 +1,10 @@
 # Changelog
 
+### Version 0.3.4
+```
+[*]changed the way the player is initially drawn
+```
+
 ### Version 0.3.3
 ```
 [+] Added a new rock map
