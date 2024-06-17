@@ -4,7 +4,6 @@ from misc import *
 from player import player
 from overlay import overlay
 from pytmx.util_pygame import load_pygame
-from enemy import enemy
 
 class level:
     def __init__(self):
@@ -16,14 +15,19 @@ class level:
         self.map = pygame.sprite.Group()
         self.collisions = pygame.sprite.Group()
 
-        # Drawing the player
-        self.player = player((125, 125), self.sprites, self.collisions)
-
-        # Drawing Enemies
-        self.enemies = [enemy([self.player,], (10,10), self.sprites, self.collisions)]
-
         # Load map
-        self.load(input("Choose a map (test, rock, sewer): "))
+        selection =(input("Choose a map (test, rock, sewer): "))
+        self.load(selection)
+
+        # Drawing the player
+        if selection == "sewer":
+            self.player = player((125, 125), self.sprites, self.collisions)
+        elif selection == "rock":
+            self.player = player((350, 350), self.sprites, self.collisions)
+        elif selection == "test":
+            self.player = player((600, 600), self.sprites, self.collisions)
+
+        
         
         # Drawing the overlay
         self.overlay = overlay()
@@ -75,7 +79,7 @@ class level:
                 self.sprites.add(i)
 
         # Updating sprites
-        self.sprites.drawSprites(self.player, self.enemies)
+        self.sprites.drawSprites(self.player)
         self.sprites.update(deltaTime)
         
         # Updating overlay
@@ -103,7 +107,7 @@ class camera(pygame.sprite.Group):
         self.offset = pygame.math.Vector2()
         self.goal = pygame.math.Vector2()
 
-    def drawSprites(self, player, enemies):
+    def drawSprites(self, player):
         # Offset camera based on mouse position
         mouseOffset = middleScreen - pygame.mouse.get_pos()
 
@@ -137,7 +141,5 @@ class camera(pygame.sprite.Group):
                         else:
                             self.screen.blit(player.currentItem.image, player.currentItem.rect)
                             self.screen.blit(v.image, newrect)
-                    if v in enemies:
-                        self.screen.blit(v.image, newrect)
                     else:
                         self.screen.blit(v.image, newrect)

@@ -2,7 +2,7 @@
 
 ### Version 0.3.4
 ```
-[+] Brought enemy from temp-enemyAI branch
+[*]changed the way the player is initially drawn
 ```
 
 ### Version 0.3.3
