@@ -1,5 +1,10 @@
 # Changelog
 
+### Version 0.3.5
+```
+[+] Brought enemy from temp-enemyAI branch (did this yesterday but forgot to push so now it's redone)
+```
+
 ### Version 0.3.4
 ```
 [*]changed the way the player is initially drawn
