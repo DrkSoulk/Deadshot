@@ -72,6 +72,7 @@ class level:
         # Adding projectiles
         for i in projectiles:
             i.collisions = self.collisions
+            i.enemies = self.enemies
 
             if i not in self.sprites:
                 self.sprites.add(i)
@@ -80,6 +81,11 @@ class level:
         for i in vfx:
             if i not in self.sprites:
                 self.sprites.add(i)
+
+        # Updating enemy list
+        for enemy in self.enemies:
+            if enemy.health <= 0:
+                self.enemies.remove(enemy)
 
         # Updating sprites
         self.sprites.drawSprites(self.player, self.enemies)

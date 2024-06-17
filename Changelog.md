@@ -1,5 +1,12 @@
 # Changelog
 
+### Version 0.3.6
+```
+[+] Enemy can now be hit and killed by bullets
+[+] Enemy health now factors into move speed
+[*] Reformatting of enemy module
+```
+
 ### Version 0.3.5
 ```
 [+] Brought enemy from temp-enemyAI branch (did this yesterday but forgot to push so now it's redone)

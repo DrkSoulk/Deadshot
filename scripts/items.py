@@ -192,6 +192,10 @@ class projectile(pygame.sprite.Sprite):
 
         # Collisions
         self.collisions = None
+        self.enemies = None
+
+        # Damage (CHANGE TO VARY BASED ON TYPE)
+        self.damage = 1
         
     def update(self, deltaTime):
         # Update position of projectile
@@ -220,6 +224,11 @@ class projectile(pygame.sprite.Sprite):
                 self.kill()
 
                 return
+            
+        for i in self.enemies:
+            if hasattr(i, "hitbox") and i.hitbox.colliderect(self.rect):
+                i.health -= self.damage
+                self.kill()
 
 class item(pygame.sprite.Sprite):
     def __init__(self, name, position):
