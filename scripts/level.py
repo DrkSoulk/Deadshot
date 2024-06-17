@@ -18,21 +18,10 @@ class level:
         self.collisions = pygame.sprite.Group()
 
         # Load map
-        selection =(input("Choose a map (test, rock, sewer): "))
-        self.load(selection)
+        currentmap = maplist[1]
+        self.load(currentmap)
 
         self.pause = True
-
-        # Drawing the player
-        if selection == "sewer":
-            self.player = player((125, 125), self.sprites, self.collisions)
-        elif selection == "rock":
-            self.player = player((350, 350), self.sprites, self.collisions)
-        elif selection == "test":
-            self.player = player((600, 600), self.sprites, self.collisions)
-
-        # Drawing Enemies
-        self.enemies = [enemy([self.player,], (10,10), self.sprites, self.collisions)]
 
         # Drawing the overlay
         self.overlay = overlay()
@@ -66,6 +55,29 @@ class level:
         # Add map to be drawn
         for i in self.map:
             self.sprites.add(i)
+
+        # Clearing Entities
+        try:
+            self.player.kill()
+        except:
+            pass
+        try:
+            for i in self.enemies:
+                self.enemies.remove(i)
+                i.kill()
+        except:
+            pass
+
+        # Drawing the player
+        if map == "sewer":
+            self.player = player((125, 125), self.sprites, self.collisions)
+        elif map == "rock":
+            self.player = player((350, 350), self.sprites, self.collisions)
+        elif map == "test":
+            self.player = player((600, 600), self.sprites, self.collisions)
+
+        # Drawing Enemies
+        self.enemies = [enemy([self.player,], (10,10), self.sprites, self.collisions)]
 
     def run(self, deltaTime):
         # Updating background
@@ -102,7 +114,6 @@ class level:
 
         display, rect = self.overlay.drawMenu()
         self.screen.blit(display, rect)
-        
 
 class sprites(pygame.sprite.Sprite):
     def __init__(self, position, image, group, zIndex = layers["main"]):

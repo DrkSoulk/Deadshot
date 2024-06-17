@@ -1,10 +1,14 @@
 # Changelog
 
+### Version 0.3.8
+```
+[+] Added map switching part of menu
+```
+
 ### Version 0.3.7
 ```
 [+] Added pause screen
 ```
-
 
 ### Version 0.3.6
 ```

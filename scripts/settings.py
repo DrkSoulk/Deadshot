@@ -19,6 +19,7 @@ maxLookDistance = pygame.math.Vector2(150)
 
 # Misc style settings
 menuBGcolour = (50,20,20)
+selectorColour = (180,0,0)
 
 # Player keybinds
 keybinds = {
@@ -33,6 +34,9 @@ keybinds = {
     "reload": pygame.K_r,
     "endGame": pygame.K_ESCAPE,
     "pause": pygame.K_p,
+    "select": pygame.K_RETURN,
+    "menuUp": pygame.K_UP,
+    "menuDown": pygame.K_DOWN
 }
 
 # Drawing layers
@@ -50,3 +54,10 @@ mixer = {
     "player": 0.6,
     "guns": 0.4
 }
+
+# Map List
+maplist = [
+    'test',
+    'sewer',
+    'rock'
+]

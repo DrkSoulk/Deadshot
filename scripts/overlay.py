@@ -13,6 +13,10 @@ class overlay(pygame.sprite.Sprite):
 
         #Load bullet image
         self.bulletImage = pygame.image.load("sprites/hud/Bullet.png").convert_alpha()
+
+        # Set up selector
+        self.selector = 0
+        self.submenus = ['map', 'weapon', 'start']
     
     def drawText(self, text, position = 1):
         # Get overlay size
@@ -89,9 +93,39 @@ class overlay(pygame.sprite.Sprite):
         # Return to be drawn
         return self.overlay, self.rect
     
-    def drawMenu(self):
+    def drawPause(self):
         self.overlay.fill((0, 0, 0, 0))
 
         self.drawText("press P to start/resume", 3)
         self.drawText("press Esc to exit")
         return self.overlay, self.rect
+
+    def drawMenu(self):
+        self.overlay.fill((0, 0, 0, 0))
+        selected = self.submenus[self.selector]
+
+        for menu in self.submenus:
+            col = (255,255,255)
+            if selected == menu:
+                col = selectorColour
+            textSize = self.basicFont.get_rect(menu)
+            self.basicFont.render_to(self.overlay, 
+                                     (middleScreen.x - 0.5*textSize.width, \
+                                      middleScreen.y -90 +self.submenus.index\
+                                        (menu)*fontSize), menu,(col))
+
+        return self.overlay, self.rect
+
+    def select(self, level):
+        selected = self.submenus[self.selector]
+        if selected == 'map':
+            self.submenus = maplist
+        elif self.submenus == maplist:
+            level.load(selected)
+
+    def menuDown(self):
+        if not self.selector >= len(self.submenus) - 1:
+            self.selector += 1
+    def menuUp(self):
+        if not self.selector <= 0:
+            self.selector -= 1
