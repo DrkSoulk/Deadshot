@@ -17,6 +17,9 @@ tileSize = 18
 scaleFactor = 2.5
 maxLookDistance = pygame.math.Vector2(150)
 
+# Misc style settings
+menuBGcolour = (50,20,20)
+
 # Player keybinds
 keybinds = {
     "left": pygame.K_a,
@@ -28,7 +31,8 @@ keybinds = {
     "secondary": pygame.K_2,
     "swap": pygame.K_q,
     "reload": pygame.K_r,
-    "endGame": pygame.K_ESCAPE
+    "endGame": pygame.K_ESCAPE,
+    "pause": pygame.K_p,
 }
 
 # Drawing layers

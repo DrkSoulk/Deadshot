@@ -88,3 +88,10 @@ class overlay(pygame.sprite.Sprite):
         
         # Return to be drawn
         return self.overlay, self.rect
+    
+    def drawMenu(self):
+        self.overlay.fill((0, 0, 0, 0))
+
+        self.drawText("press P to start/resume", 3)
+        self.drawText("press Esc to exit")
+        return self.overlay, self.rect

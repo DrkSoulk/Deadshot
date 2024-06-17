@@ -36,12 +36,17 @@ class game:
                     if i.key == keybinds["endGame"]:
                         pygame.quit()
                         sys.exit()
+                    if i.key == keybinds["pause"]:
+                        self.level.pause = (not self.level.pause)
             
             # Getting the delta time
             deltaTime = self.uptime.tick() / 1000
 
             # Running the level
-            self.level.run(deltaTime)
+            if not self.level.pause:
+                self.level.run(deltaTime)
+            else:
+                self.level.menu()
 
             # Updating the screen
             pygame.display.update()

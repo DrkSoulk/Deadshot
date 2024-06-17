@@ -1,5 +1,11 @@
 # Changelog
 
+### Version 0.3.7
+```
+[+] Added pause screen
+```
+
+
 ### Version 0.3.6
 ```
 [+] Enemy can now be hit and killed by bullets

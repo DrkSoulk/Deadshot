@@ -21,6 +21,8 @@ class level:
         selection =(input("Choose a map (test, rock, sewer): "))
         self.load(selection)
 
+        self.pause = True
+
         # Drawing the player
         if selection == "sewer":
             self.player = player((125, 125), self.sprites, self.collisions)
@@ -94,6 +96,13 @@ class level:
         # Updating overlay
         display, rect = self.overlay.update(self.player)
         self.screen.blit(display, rect)
+
+    def menu(self):
+        self.screen.fill(menuBGcolour)
+
+        display, rect = self.overlay.drawMenu()
+        self.screen.blit(display, rect)
+        
 
 class sprites(pygame.sprite.Sprite):
     def __init__(self, position, image, group, zIndex = layers["main"]):
