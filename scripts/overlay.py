@@ -1,22 +1,27 @@
 import pygame
 from settings import *
+from items import items
 
 class overlay(pygame.sprite.Sprite):
     def __init__(self):
         # Overlay setup
         self.overlay = pygame.surface.Surface(resolution - overlayOffset, \
-                                              pygame.SRCALPHA, 32).convert_alpha()
+                                              pygame.SRCALPHA, 32\
+                                                ).convert_alpha()
         self.rect = self.overlay.get_rect(center = middleScreen)
         
         # Import font
         self.basicFont = pygame.freetype.Font("fonts/basic.ttf", fontSize)
 
         #Load bullet image
-        self.bulletImage = pygame.image.load("sprites/hud/Bullet.png").convert_alpha()
+        self.bulletImage = pygame.image.load("sprites/hud/Bullet.png"\
+                                             ).convert_alpha()
 
-        # Set up selector
+        # Set up menus
         self.selector = 0
         self.submenus = ['map', 'weapon', 'start']
+        self.menublurb = ["press Esc to quit","press P to pause/resume",
+                          "press up/down and enter to select"]
     
     def drawText(self, text, position = 1):
         # Get overlay size
@@ -93,12 +98,6 @@ class overlay(pygame.sprite.Sprite):
         # Return to be drawn
         return self.overlay, self.rect
     
-    def drawPause(self):
-        self.overlay.fill((0, 0, 0, 0))
-
-        self.drawText("press P to start/resume", 3)
-        self.drawText("press Esc to exit")
-        return self.overlay, self.rect
 
     def drawMenu(self):
         self.overlay.fill((0, 0, 0, 0))
@@ -113,19 +112,68 @@ class overlay(pygame.sprite.Sprite):
                                      (middleScreen.x - 0.5*textSize.width, \
                                       middleScreen.y -90 +self.submenus.index\
                                         (menu)*fontSize), menu,(col))
+            for i in self.menublurb:
+                self.drawText(i, self.menublurb.index(i)*2 + 1)
 
         return self.overlay, self.rect
 
+
     def select(self, level):
+        # Create item list
+        itemlist = []
+        for i in items['guns']:
+            itemlist.append(i)
+        itemlist.append('back')
+        
         selected = self.submenus[self.selector]
+        
         if selected == 'map':
             self.submenus = maplist
+            self.menublurb = [level.currentmap,
+                              "current map:"]
+
         elif self.submenus == maplist:
-            level.load(selected)
+            if not selected == 'back':
+                level.unloadedMap = selected
+            else:
+                self.submenus = ['map', 'weapon', 'start']
+                self.menublurb = ["press Esc to quit",\
+                                  "press P to pause/resume",
+                                  "press up/down and enter to select"]
+
+        elif selected == 'weapon':
+            self.submenus = itemlist
+            self.menublurb = [level.player.currentItemIndex,
+                              "currently selecting:"]
+
+        elif self.submenus == itemlist:
+            if not selected == 'back':
+                if level.player.currentItemIndex == 'primary':
+                    level.primary = selected
+                else:
+                    level.secondary = selected
+            else:
+                self.submenus = ['map', 'weapon', 'start']
+                self.menublurb = ["press Esc to quit",\
+                                  "press P to pause/resume",
+                                  "press up/down and enter to select"]
+                
+
+        elif selected == 'start':
+            level.load(level.unloadedMap)
+            level.pause = False
+        self.selector = 0
+
 
     def menuDown(self):
         if not self.selector >= len(self.submenus) - 1:
             self.selector += 1
+        else:
+            self.selector = 0
+
+
     def menuUp(self):
         if not self.selector <= 0:
             self.selector -= 1
+        else:
+            self.selector = len(self.submenus) - 1

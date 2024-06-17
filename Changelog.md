@@ -1,5 +1,11 @@
 # Changelog
 
+### Version 0.3.9
+```
+[+] Added weapon switching part of menu
+[*] Merged 'pause' and 'menu' into one big pause menu
+```
+
 ### Version 0.3.8
 ```
 [+] Added map switching part of menu

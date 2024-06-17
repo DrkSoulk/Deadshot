@@ -9,7 +9,7 @@ from misc import *
 from items import item
 
 class player(pygame.sprite.Sprite):
-    def __init__(self, position, group, collisions):
+    def __init__(self, position, group, collisions, items):
         # Initialize the player
         super().__init__(group)
 
@@ -56,8 +56,8 @@ class player(pygame.sprite.Sprite):
 
         # Inventory setup
         self.inventory = {
-            "primary": item("tommyGun", self.position),
-            "secondary": item("pea", self.position),
+            "primary": item(items[0], self.position),
+            "secondary": item(items[1], self.position),
             "ammo": {
                 "nerfGun": 999,
                 "pistol": 999,

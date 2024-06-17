@@ -17,9 +17,13 @@ class level:
         self.map = pygame.sprite.Group()
         self.collisions = pygame.sprite.Group()
 
+        # Set up loaded items
+        self.primary = 'tommyGun'
+        self.secondary = 'pea'
+
         # Load map
-        currentmap = maplist[1]
-        self.load(currentmap)
+        self.unloadedMap = maplist[0]
+        self.load(self.unloadedMap)
 
         self.pause = True
 
@@ -70,14 +74,16 @@ class level:
 
         # Drawing the player
         if map == "sewer":
-            self.player = player((125, 125), self.sprites, self.collisions)
+            self.player = player((125, 125), self.sprites, self.collisions, (self.primary, self.secondary))
         elif map == "rock":
-            self.player = player((350, 350), self.sprites, self.collisions)
+            self.player = player((350, 350), self.sprites, self.collisions, (self.primary, self.secondary))
         elif map == "test":
-            self.player = player((600, 600), self.sprites, self.collisions)
+            self.player = player((600, 600), self.sprites, self.collisions, (self.primary, self.secondary))
 
         # Drawing Enemies
         self.enemies = [enemy([self.player,], (10,10), self.sprites, self.collisions)]
+
+        self.currentmap = map
 
     def run(self, deltaTime):
         # Updating background

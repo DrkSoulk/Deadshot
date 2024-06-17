@@ -10,6 +10,10 @@ from os import walk
 projectiles = pygame.sprite.Group()
 vfx = pygame.sprite.Group()
 
+# Loading Weapons
+primary = 'tommyGun'
+secondary = 'pea'
+
 class timer:
     '''
     Class for timer to sync frames/operations
