@@ -1,5 +1,6 @@
 import pygame
 from settings import *
+from misc import *
 from items import items
 
 class overlay(pygame.sprite.Sprite):
@@ -16,6 +17,13 @@ class overlay(pygame.sprite.Sprite):
         #Load bullet image
         self.bulletImage = pygame.image.load("sprites/hud/Bullet.png"\
                                              ).convert_alpha()
+
+        # Sounds
+        self.soundChannel = pygame.mixer.Channel(2)
+        self.sounds = importSounds("sounds/ui")
+
+        # Volume
+        self.soundChannel.set_volume(mixer["ui"])
 
         # Set up menus
         self.selector = 0
@@ -131,6 +139,9 @@ class overlay(pygame.sprite.Sprite):
         '''
         Select an option in the menu
         '''
+
+        self.soundChannel.play(self.sounds["select"])
+
         # Create item list
         itemlist = []
         for i in items['guns']:
@@ -179,6 +190,7 @@ class overlay(pygame.sprite.Sprite):
                 
         # Loads selected map
         elif selected == 'apply and start':
+            self.soundChannel.play(self.sounds["start"])
             level.load(level.unloadedMap)
             level.pause = False
         self.selector = 0
@@ -188,6 +200,7 @@ class overlay(pygame.sprite.Sprite):
         '''
         Moves selector down or cycles back to top if at bottom
         '''
+        self.soundChannel.play(self.sounds["move"])
         if not self.selector >= len(self.submenus) - 1:
             self.selector += 1
         else:
@@ -198,6 +211,7 @@ class overlay(pygame.sprite.Sprite):
         '''
         Moves selector up or cycles back to bottom if at top
         '''
+        self.soundChannel.play(self.sounds["move"])
         if not self.selector <= 0:
             self.selector -= 1
         else:

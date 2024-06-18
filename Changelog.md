@@ -1,5 +1,10 @@
 # Changelog
 
+### Version 0.4.1
+```
+[+] Added menu sounds
+```
+
 ### Version 0.4.0
 ```
 [*] Fixed notation for menu portion of overlay module

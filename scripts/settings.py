@@ -52,7 +52,8 @@ layers = {
 mixer = {
     "master": 1,
     "player": 0.6,
-    "guns": 0.4
+    "guns": 0.4,
+    "ui": 0.5
 }
 
 # Map List
