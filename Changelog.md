@@ -1,5 +1,11 @@
 # Changelog
 
+### Version 0.4.0
+```
+[*] Fixed notation for menu portion of overlay module
+[*] Menu wording tweaks
+```
+
 ### Version 0.3.9
 ```
 [+] Added weapon switching part of menu

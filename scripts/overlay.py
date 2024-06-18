@@ -19,7 +19,7 @@ class overlay(pygame.sprite.Sprite):
 
         # Set up menus
         self.selector = 0
-        self.submenus = ['map', 'weapon', 'start']
+        self.submenus = ['map', 'weapon', 'apply and start']
         self.menublurb = ["press Esc to quit","press P to pause/resume",
                           "press up/down and enter to select"]
     
@@ -100,9 +100,16 @@ class overlay(pygame.sprite.Sprite):
     
 
     def drawMenu(self):
+        '''
+        Draws the menu
+        '''
+        # Erase previous overlay
         self.overlay.fill((0, 0, 0, 0))
+
+        # Sets currently selected option
         selected = self.submenus[self.selector]
 
+        # Drawing options
         for menu in self.submenus:
             col = (255,255,255)
             if selected == menu:
@@ -112,60 +119,75 @@ class overlay(pygame.sprite.Sprite):
                                      (middleScreen.x - 0.5*textSize.width, \
                                       middleScreen.y -90 +self.submenus.index\
                                         (menu)*fontSize), menu,(col))
-            for i in self.menublurb:
-                self.drawText(i, self.menublurb.index(i)*2 + 1)
-
+            
+        # Draws tooltips 
+        for i in self.menublurb:
+            self.drawText(i, self.menublurb.index(i)*2 + 1)
+        
         return self.overlay, self.rect
 
 
     def select(self, level):
+        '''
+        Select an option in the menu
+        '''
         # Create item list
         itemlist = []
         for i in items['guns']:
             itemlist.append(i)
         itemlist.append('back')
         
+        # Sets currently selected option
         selected = self.submenus[self.selector]
         
+        # Loads map options to menu
         if selected == 'map':
             self.submenus = maplist
             self.menublurb = [level.currentmap,
                               "current map:"]
 
+        # Queues map to load
         elif self.submenus == maplist:
             if not selected == 'back':
                 level.unloadedMap = selected
+            # Goes back to initial menu
             else:
-                self.submenus = ['map', 'weapon', 'start']
+                self.submenus = ['map', 'weapon', 'apply and start']
                 self.menublurb = ["press Esc to quit",\
                                   "press P to pause/resume",
                                   "press up/down and enter to select"]
 
+        # Loads weapon options to menu
         elif selected == 'weapon':
             self.submenus = itemlist
             self.menublurb = [level.player.currentItemIndex,
                               "currently selecting:"]
 
+        # Queues selected item
         elif self.submenus == itemlist:
             if not selected == 'back':
                 if level.player.currentItemIndex == 'primary':
                     level.primary = selected
                 else:
                     level.secondary = selected
+            # Goes back to initial menu
             else:
-                self.submenus = ['map', 'weapon', 'start']
+                self.submenus = ['map', 'weapon', 'apply and start']
                 self.menublurb = ["press Esc to quit",\
                                   "press P to pause/resume",
                                   "press up/down and enter to select"]
                 
-
-        elif selected == 'start':
+        # Loads selected map
+        elif selected == 'apply and start':
             level.load(level.unloadedMap)
             level.pause = False
         self.selector = 0
 
 
     def menuDown(self):
+        '''
+        Moves selector down or cycles back to top if at bottom
+        '''
         if not self.selector >= len(self.submenus) - 1:
             self.selector += 1
         else:
@@ -173,6 +195,9 @@ class overlay(pygame.sprite.Sprite):
 
 
     def menuUp(self):
+        '''
+        Moves selector up or cycles back to bottom if at top
+        '''
         if not self.selector <= 0:
             self.selector -= 1
         else:
